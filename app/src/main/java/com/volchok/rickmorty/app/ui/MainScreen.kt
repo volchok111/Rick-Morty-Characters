@@ -19,6 +19,7 @@ import com.volchok.rickmorty.feature.home.ui.HomeScreen
 import com.volchok.rickmorty.ui.theme.RickMortyTheme
 import com.volchok.rickmorty.app.model.BackNavigationEvent
 import com.volchok.rickmorty.app.model.ForwardNavigationEvent
+import com.volchok.rickmorty.feature.details.ui.DetailsScreen
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -69,7 +70,7 @@ private fun Screens(
         modifier = modifier
     ) {
         composable(Route.Home()) { HomeScreen() }
-
+        composable(Route.Details()) { DetailsScreen() }
     }
 }
 
