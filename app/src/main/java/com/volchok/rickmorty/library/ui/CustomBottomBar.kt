@@ -44,7 +44,7 @@ private fun RowScope.BottomBarItem(
         selected = selected,
         onClick = { onClick() },
         icon = {
-            SpaceXIcon(
+            CustomIcon(
                 icon = icon,
                 contentDescription = null,
                 tint = CustomColors.black,

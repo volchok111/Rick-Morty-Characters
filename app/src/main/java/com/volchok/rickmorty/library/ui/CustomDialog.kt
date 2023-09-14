@@ -18,9 +18,9 @@ import androidx.compose.ui.Alignment.Companion.BottomEnd
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.volchok.rickmorty.library.ui.CustomColors.accentPrimary
 import com.volchok.rickmorty.library.ui.CustomColors.black
 import com.volchok.rickmorty.library.ui.CustomColors.white
-import com.volchok.rickmorty.library.ui.CustomColors.accentPrimary
 
 @Composable
 fun CustomAlertDialog(
@@ -66,14 +66,14 @@ fun CustomAlertDialog(
                 Spacer(modifier = Modifier.height(CustomDimensions.sizeXS))
                 Row {
                     neutralButtonText?.let {
-                        SpaceXActionButton(
+                        CustomActionButton(
                             text = it,
                             onClick = onNeutralButtonClick
                         )
                     }
                     Spacer(Modifier.weight(1f))
                     negativeButtonText?.let {
-                        SpaceXActionButton(
+                        CustomActionButton(
                             text = it,
                             onClick = onNegativeButtonClick
                         )
