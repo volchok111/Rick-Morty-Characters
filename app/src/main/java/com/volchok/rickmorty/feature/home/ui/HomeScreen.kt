@@ -29,6 +29,7 @@ import com.volchok.rickmorty.feature.home.presentation.HomeViewModel
 import com.volchok.rickmorty.library.ui.CustomColors.backgroundsPrimary
 import com.volchok.rickmorty.library.ui.CustomColors.black
 import com.volchok.rickmorty.library.ui.CustomColors.chrome300
+import com.volchok.rickmorty.library.ui.CustomDimensions
 import com.volchok.rickmorty.library.ui.CustomDimensions.sizeS
 import com.volchok.rickmorty.library.ui.CustomDimensions.sizeXS
 import com.volchok.rickmorty.library.ui.CustomText
@@ -85,7 +86,8 @@ private fun ListItem(
         shape = RoundedCornerShape(20.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .height(90.dp)
+            .height(90.dp),
+        elevation = CustomDimensions.sizeXXS
     ) {
         Row(
             modifier = modifier
