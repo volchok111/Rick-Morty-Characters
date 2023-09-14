@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 
 @Composable
-fun SpaceXIcon(
+fun CustomIcon(
     icon: Int,
     contentDescription: String?,
     modifier: Modifier = Modifier,

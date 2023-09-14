@@ -16,19 +16,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.volchok.rickmorty.library.ui.CustomColors.accentPrimary
 import com.volchok.rickmorty.library.ui.CustomColors.chrome300
 import com.volchok.rickmorty.library.ui.CustomColors.chrome700
 import com.volchok.rickmorty.library.ui.CustomColors.white
-import com.volchok.rickmorty.library.ui.CustomColors.accentPrimary
 
 @Composable
-fun SpaceXPrimaryButton(
+fun CustomPrimaryButton(
     text: String?,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true
 ) {
-    SpaceXButton(
+    CustomButton(
         onClick = onClick,
         modifier = modifier,
         text = text,
@@ -39,13 +39,13 @@ fun SpaceXPrimaryButton(
 }
 
 @Composable
-fun SpaceXSecondaryButton(
+fun CustomSecondaryButton(
     text: String?,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true
 ) {
-    SpaceXButton(
+    CustomButton(
         onClick = onClick,
         modifier = modifier,
         text = text,
@@ -56,13 +56,13 @@ fun SpaceXSecondaryButton(
 }
 
 @Composable
-fun SpaceXActionButton(
+fun CustomActionButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true
 ) {
-    SpaceXButton(
+    CustomButton(
         onClick = onClick,
         modifier = modifier,
         text = text,
@@ -73,7 +73,7 @@ fun SpaceXActionButton(
 }
 
 @Composable
-private fun SpaceXButton(
+private fun CustomButton(
     onClick: () -> Unit,
     modifier: Modifier,
     text: String?,
