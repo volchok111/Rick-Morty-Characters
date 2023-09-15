@@ -14,10 +14,18 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.BottomEnd
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.volchok.rickmorty.R
 import com.volchok.rickmorty.library.ui.CustomColors.accentPrimary
 import com.volchok.rickmorty.library.ui.CustomColors.black
 import com.volchok.rickmorty.library.ui.CustomColors.white
@@ -106,6 +114,13 @@ fun CustomLoadingDialog(
     modifier: Modifier = Modifier,
     text: String? = null,
 ) {
+    val isLoading by remember { mutableStateOf(true) }
+    val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.morty_loading))
+    val progress by animateLottieCompositionAsState(
+        composition = composition,
+        isPlaying = isLoading,
+        iterations = 1000
+    )
     Surface(
         modifier = modifier.fillMaxSize(),
         shape = RoundedCornerShape(CustomDimensions.sizeS),
@@ -126,6 +141,11 @@ fun CustomLoadingDialog(
                     modifier = Modifier.padding(top = CustomDimensions.sizeL)
                 )
             }
+            Spacer(modifier = Modifier.height(CustomDimensions.sizeM))
+            LottieAnimation(
+                composition = composition,
+                progress = { progress })
+            Spacer(modifier = Modifier.height(CustomDimensions.sizeXXS))
         }
     }
 }
