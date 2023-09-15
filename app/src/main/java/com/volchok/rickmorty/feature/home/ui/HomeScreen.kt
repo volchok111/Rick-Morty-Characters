@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -21,10 +22,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.volchok.rickmorty.R
+import coil.compose.rememberAsyncImagePainter
 import com.volchok.rickmorty.feature.home.presentation.HomeViewModel
 import com.volchok.rickmorty.library.ui.CustomColors.backgroundsPrimary
 import com.volchok.rickmorty.library.ui.CustomColors.black
@@ -32,6 +32,7 @@ import com.volchok.rickmorty.library.ui.CustomColors.chrome300
 import com.volchok.rickmorty.library.ui.CustomDimensions
 import com.volchok.rickmorty.library.ui.CustomDimensions.sizeS
 import com.volchok.rickmorty.library.ui.CustomDimensions.sizeXS
+import com.volchok.rickmorty.library.ui.CustomLoadingDialog
 import com.volchok.rickmorty.library.ui.CustomText
 import org.koin.androidx.compose.getViewModel
 
@@ -40,11 +41,15 @@ fun HomeScreen() {
     val viewModel = getViewModel<HomeViewModel>()
     val state = viewModel.states.collectAsState()
 
-    HomeScreenImpl()
+    HomeScreenImpl(
+        state = state.value
+    )
 }
 
 @Composable
-private fun HomeScreenImpl() {
+private fun HomeScreenImpl(
+    state: HomeViewModel.State
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -65,22 +70,27 @@ private fun HomeScreenImpl() {
 
         Box {
             LazyColumn {
-                items(10) { item ->
+                items(state.characters) { item ->
                     Spacer(modifier = Modifier.height(sizeXS))
                     ListItem(
                         modifier = Modifier
-                            .clickable { }
+                            .clickable { },
+                        item = item
                     )
                     Spacer(modifier = Modifier.height(sizeXS))
                 }
             }
         }
     }
+    if (state.loading) {
+        CustomLoadingDialog(title = "")
+    }
 }
 
 @Composable
 private fun ListItem(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    item: HomeViewModel.State.CharacterItem
 ) {
     Card(
         shape = RoundedCornerShape(20.dp),
@@ -102,20 +112,20 @@ private fun ListItem(
                     .padding(end = sizeS)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.img),
+                    painter = rememberAsyncImagePainter(model = item.image),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                 )
             }
             Column {
                 CustomText(
-                    text = "Rick Sanchez",
-                    style = MaterialTheme.typography.h5,
+                    text = item.name.orEmpty(),
+                    style = MaterialTheme.typography.h6,
                     color = black,
                     fontWeight = FontWeight.Bold
                 )
                 CustomText(
-                    text = "Alive",
+                    text = item.status.orEmpty(),
                     style = MaterialTheme.typography.subtitle1,
                     color = chrome300
                 )
