@@ -42,13 +42,15 @@ fun HomeScreen() {
     val state = viewModel.states.collectAsState()
 
     HomeScreenImpl(
-        state = state.value
+        state = state.value,
+        viewModel::onItem
     )
 }
 
 @Composable
 private fun HomeScreenImpl(
-    state: HomeViewModel.State
+    state: HomeViewModel.State,
+    onItem: (Int) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -74,7 +76,7 @@ private fun HomeScreenImpl(
                     Spacer(modifier = Modifier.height(sizeXS))
                     ListItem(
                         modifier = Modifier
-                            .clickable { },
+                            .clickable { item.id?.let { onItem(it) } },
                         item = item
                     )
                     Spacer(modifier = Modifier.height(sizeXS))

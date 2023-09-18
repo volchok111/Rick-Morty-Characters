@@ -4,6 +4,7 @@ import com.volchok.rickmorty.app.device.GlobalNavigationController
 import com.volchok.rickmorty.app.presentation.MainViewModel
 import com.volchok.rickmorty.app.domain.MainNavigationController
 import com.volchok.rickmorty.app.domain.ObserveNavigationEventsUseCase
+import com.volchok.rickmorty.feature.home.domain.HomeNavigationController
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.binds
 import org.koin.dsl.module
@@ -14,7 +15,8 @@ internal val mainModule = module {
 
     single { GlobalNavigationController() }.binds(
         arrayOf(
-            MainNavigationController::class
+            MainNavigationController::class,
+            HomeNavigationController::class
         )
     )
 }
