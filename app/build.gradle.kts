@@ -89,6 +89,13 @@ dependencies {
     implementation ("androidx.paging:paging-runtime-ktx:3.2.1")
     implementation ("androidx.paging:paging-compose:3.2.1")
 
+    // Room
+    implementation("androidx.room:room-runtime:2.5.2")
+    implementation ("androidx.room:room-ktx:2.5.2")
+    implementation ("androidx.room:room-paging:2.5.2")
+    annotationProcessor("androidx.room:room-compiler:2.5.2")
+    annotationProcessor ("android.arch.persistence.room:compiler:1.1.1")
+
     //Lottie Icons
     implementation ("com.airbnb.android:lottie-compose:6.0.0")
 
