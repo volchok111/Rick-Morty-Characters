@@ -18,14 +18,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.volchok.rickmorty.R
+import coil.compose.rememberAsyncImagePainter
 import com.volchok.rickmorty.feature.details.presentation.DetailsViewModel
 import com.volchok.rickmorty.library.ui.CustomColors
 import com.volchok.rickmorty.library.ui.CustomDimensions
+import com.volchok.rickmorty.library.ui.CustomLoadingDialog
 import com.volchok.rickmorty.library.ui.CustomText
 import org.koin.androidx.compose.getViewModel
 
@@ -34,11 +34,16 @@ fun DetailsScreen() {
     val viewModel = getViewModel<DetailsViewModel>()
     val state = viewModel.states.collectAsState()
 
-    DetailsScreenImpl()
+    DetailsScreenImpl(
+        state = state.value
+    )
 }
 
 @Composable
-private fun DetailsScreenImpl() {
+private fun DetailsScreenImpl(
+    state: DetailsViewModel.State
+) {
+    //TODO: Add Top Bar
     Card(
         shape = RoundedCornerShape(20.dp),
         modifier = Modifier
@@ -59,7 +64,7 @@ private fun DetailsScreenImpl() {
                         .padding(end = CustomDimensions.sizeS)
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.img),
+                        painter = rememberAsyncImagePainter(model = state.character?.image),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                     )
@@ -77,7 +82,7 @@ private fun DetailsScreenImpl() {
                     Spacer(modifier = Modifier.height(CustomDimensions.sizeS))
 
                     CustomText(
-                        text = "Rick Sanchez",
+                        text = state.character?.name.orEmpty(),
                         style = MaterialTheme.typography.h5,
                         color = CustomColors.black,
                         fontWeight = FontWeight.Bold
@@ -90,14 +95,20 @@ private fun DetailsScreenImpl() {
                 modifier = Modifier
                     .padding(CustomDimensions.sizeS)
             ) {
-                InfoItem(subTitle = "Status", title = "Alive")
-                InfoItem(subTitle = "Species", title = "Human")
-                InfoItem(subTitle = "Type", title = "-")
-                InfoItem(subTitle = "Gender", title = "Male")
-                InfoItem(subTitle = "Origin", title = "Earth (C-137)")
-                InfoItem(subTitle = "Location", title = "Earth (Replacement Dimension)")
+                InfoItem(subTitle = "Status", title = state.character?.status.orEmpty())
+                InfoItem(subTitle = "Species", title = state.character?.species.orEmpty())
+                InfoItem(
+                    subTitle = "Type",
+                    title = if (state.character?.type?.isEmpty() == true) "-" else state.character?.type.orEmpty()
+                )
+                InfoItem(subTitle = "Gender", title = state.character?.gender.orEmpty())
+                InfoItem(subTitle = "Origin", title = state.character?.origin?.name.orEmpty())
+                InfoItem(subTitle = "Location", title = state.character?.location?.name.orEmpty())
             }
         }
+    }
+    if (state.loading) {
+        CustomLoadingDialog(title = "")
     }
 }
 

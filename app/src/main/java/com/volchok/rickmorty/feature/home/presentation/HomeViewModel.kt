@@ -1,6 +1,7 @@
 package com.volchok.rickmorty.feature.home.presentation
 
 import androidx.lifecycle.viewModelScope
+import com.volchok.rickmorty.feature.home.domain.OpenCharacterDetailsUseCase
 import com.volchok.rickmorty.library.api.domain.ObserveCharactersUseCase
 import com.volchok.rickmorty.library.api.model.CharacterItem
 import com.volchok.rickmorty.library.data.model.Data
@@ -9,7 +10,8 @@ import com.volchok.rickmorty.library.use_case.domain.invoke
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val observeCharactersUseCase: ObserveCharactersUseCase
+    private val observeCharactersUseCase: ObserveCharactersUseCase,
+    private val openCharacterDetailsUseCase: OpenCharacterDetailsUseCase
 ) : AbstractViewModel<HomeViewModel.State>(State()) {
 
     init {
@@ -20,6 +22,10 @@ class HomeViewModel(
                 }
             }
         }
+    }
+
+    fun onItem(id: Int) {
+        openCharacterDetailsUseCase(id)
     }
 
     private fun CharacterItem.toItem() = State.CharacterItem(
